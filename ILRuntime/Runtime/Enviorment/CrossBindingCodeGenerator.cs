@@ -285,6 +285,8 @@ namespace ");
         static bool ShouldSkip(MethodInfo info)
         {
             var paramInfos = info.GetParameters();
+            if ( info.Name == "CreateDisplayObject" )
+                return true;
             if (info.Name == "ToString" || info.Name == "GetHashCode" || info.Name == "Finalize")
                 return paramInfos.Length == 0;
             if (info.Name == "Equals" && paramInfos.Length == 1 && paramInfos[0].ParameterType == typeof(object))
