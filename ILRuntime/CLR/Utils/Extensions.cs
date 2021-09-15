@@ -9,6 +9,7 @@ using ILRuntime.Other;
 using ILRuntime.Mono.Cecil;
 using ILRuntime.Runtime.Intepreter;
 using System.Reflection;
+using UnityEngine;
 
 namespace ILRuntime.CLR.Utils
 {
@@ -293,14 +294,15 @@ namespace ILRuntime.CLR.Utils
             else if (obj is ILTypeInstance)
             {
                 var adapter = obj as IDelegateAdapter;
-
+                
                 if (adapter != null && pt != typeof(ILTypeInstance))
                 {
                     return adapter.Delegate;
                 }
-
+                
                 if (!(obj is ILEnumTypeInstance))
                 {
+                    
                     var ins = (ILTypeInstance)obj;
                     /*if (ins.IsValueType)
                         ins = ins.Clone();*/

@@ -98,7 +98,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
 
         public OpCodeR[] Compile(out int stackRegisterCnt, out Dictionary<int, int[]> switchTargets, Dictionary<Instruction, int> addr, out Dictionary<int, RegisterVMSymbol> symbols)
         {
-#if DEBUG && !NO_PROFILER
+#if !NO_PROFILER
             if (System.Threading.Thread.CurrentThread.ManagedThreadId == method.AppDomain.UnityMainThreadID)
 
 #if UNITY_5_5_OR_NEWER
@@ -345,7 +345,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
 #endif
             method.Compiling = false;
             var arr = res.ToArray();
-#if DEBUG && !NO_PROFILER
+#if !NO_PROFILER
             if (System.Threading.Thread.CurrentThread.ManagedThreadId == method.AppDomain.UnityMainThreadID)
 #if UNITY_5_5_OR_NEWER
                 UnityEngine.Profiling.Profiler.EndSample();
@@ -624,7 +624,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
                             };
                             block.InstructionMapping.Add(lst.Count,vmS);
 #endif
-#if DEBUG && !NO_PROFILER
+#if !NO_PROFILER
             if (System.Threading.Thread.CurrentThread.ManagedThreadId == method.AppDomain.UnityMainThreadID)
 
 #if UNITY_5_5_OR_NEWER
@@ -635,7 +635,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
 
 #endif
                             Optimizer.InlineMethod(block, toInline, link, ref jumptables, baseRegIdx, hasRet);
-#if DEBUG && !NO_PROFILER
+#if !NO_PROFILER
             if (System.Threading.Thread.CurrentThread.ManagedThreadId == method.AppDomain.UnityMainThreadID)
 #if UNITY_5_5_OR_NEWER
                 UnityEngine.Profiling.Profiler.EndSample();

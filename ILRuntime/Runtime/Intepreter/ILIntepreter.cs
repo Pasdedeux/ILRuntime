@@ -46,7 +46,7 @@ namespace ILRuntime.Runtime.Intepreter
         {
             //Clear old debug state
             ClearDebugState();
-#if DEBUG && !NO_PROFILER
+//#if !NO_PROFILER
             if(domain.UnityMainThreadID == Thread.CurrentThread.ManagedThreadId)
             {
                 mainthreadLock = true;
@@ -57,7 +57,7 @@ namespace ILRuntime.Runtime.Intepreter
                 }
                 return;
             }
-#endif
+//#endif
             lock (_lockObj)
             {
                 Monitor.Wait(_lockObj);
@@ -114,14 +114,14 @@ namespace ILRuntime.Runtime.Intepreter
             if (method == null)
                 throw new NullReferenceException();
 #endif
-#if DEBUG && !NO_PROFILER
+//#if !NO_PROFILER
             if (System.Threading.Thread.CurrentThread.ManagedThreadId == AppDomain.UnityMainThreadID)
 
 #if UNITY_5_5_OR_NEWER
                 UnityEngine.Profiling.Profiler.BeginSample(method.ToString());
 #else
                 UnityEngine.Profiler.BeginSample(method.ToString());
-#endif
+//#endif
 
 #endif
             OpCode[] body = method.Body;
@@ -2034,23 +2034,23 @@ namespace ILRuntime.Runtime.Intepreter
                                                     if (!allowUnboundCLRMethod)
                                                         throw new NotSupportedException(cm.ToString() + " is not bound!");
 #endif
-#if DEBUG && !NO_PROFILER
+//#if !NO_PROFILER
                                                     if (System.Threading.Thread.CurrentThread.ManagedThreadId == AppDomain.UnityMainThreadID)
 
 #if UNITY_5_5_OR_NEWER
                                                         UnityEngine.Profiling.Profiler.BeginSample(cm.ToString());
 #else
                                                         UnityEngine.Profiler.BeginSample(cm.ToString());
-#endif
+//#endif
 #endif
                                                     object result = cm.Invoke(this, esp, mStack);
-#if DEBUG && !NO_PROFILER
+//#if !NO_PROFILER
                                                     if (System.Threading.Thread.CurrentThread.ManagedThreadId == AppDomain.UnityMainThreadID)
 #if UNITY_5_5_OR_NEWER
                                                         UnityEngine.Profiling.Profiler.EndSample();
 #else
                                                         UnityEngine.Profiler.EndSample();
-#endif
+//#endif
 
 #endif
                                                     if (result is CrossBindingAdaptorType)
@@ -4505,13 +4505,13 @@ namespace ILRuntime.Runtime.Intepreter
                     }
                 }
             }
-#if DEBUG && !NO_PROFILER
+//#if !NO_PROFILER
             if (System.Threading.Thread.CurrentThread.ManagedThreadId == AppDomain.UnityMainThreadID)
 #if UNITY_5_5_OR_NEWER
                 UnityEngine.Profiling.Profiler.EndSample();
 #else
                 UnityEngine.Profiler.EndSample();
-#endif
+//#endif
 #endif
             //ClearStack
             return stack.PopFrame(ref frame, esp);

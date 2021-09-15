@@ -650,7 +650,7 @@ namespace ILRuntime.Runtime.Debugger
             ILIntepreter intepreter;
             if (AppDomain.Intepreters.TryGetValue(threadHashCode, out intepreter))
             {
-#if DEBUG && !NO_PROFILER
+#if !NO_PROFILER
                 if (domain.IsNotUnityMainThread())
                 {
                     lock (pendingEnuming)
@@ -872,7 +872,7 @@ namespace ILRuntime.Runtime.Debugger
             res = null;
             if (AppDomain.Intepreters.TryGetValue(threadHashCode, out intepreter))
             {
-#if DEBUG && !NO_PROFILER
+#if !NO_PROFILER
                 if (domain.IsNotUnityMainThread())
                 {
                     lock (pendingIndexing)
@@ -1034,7 +1034,7 @@ namespace ILRuntime.Runtime.Debugger
             {
                 if (variable != null)
                 {
-#if DEBUG && !NO_PROFILER
+#if !NO_PROFILER
                     if (domain.IsNotUnityMainThread())
                     {
                         lock (pendingReferences)

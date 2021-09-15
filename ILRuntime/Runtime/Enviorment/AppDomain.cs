@@ -71,13 +71,13 @@ namespace ILRuntime.Runtime.Enviorment
         /// </summary>
         public bool AllowUnboundCLRMethod { get; set; }
 
-#if DEBUG && !NO_PROFILER
+//#if !NO_PROFILER
         public int UnityMainThreadID { get; set; }
         public bool IsNotUnityMainThread()
         {
             return UnityMainThreadID != 0 && (UnityMainThreadID != System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
-#endif
+//#endif
 
         internal bool SuppressStaticConstructor { get; set; }
 
