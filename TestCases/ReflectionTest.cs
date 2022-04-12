@@ -160,6 +160,36 @@ namespace TestCases
                 throw new Exception("attr.Name != Example");
             }
         }
+
+        public static void TestPropertyIndexParametersInfo()
+        {
+            foreach (var pi in typeof(TestCls).GetProperties())
+            {
+                if (pi.GetIndexParameters().Length <= 0) // 只获取索引器
+                    continue;
+
+                List<string> parametersInfo = new List<string>();
+                foreach (var p in pi.GetIndexParameters())
+                {
+                    parametersInfo.Add(string.Format("[{0}, type:{1}, default value:{2}]", p.Name, p.ParameterType.FullName, p.DefaultValue));
+                }
+                Console.WriteLine(string.Format("Property:{0}.{1}, parameters:{2}, getter:{3}", pi.DeclaringType.FullName, pi.Name, string.Join(",", parametersInfo), pi.GetMethod.ToString()));
+            }
+        }
+
+        public static void TestMethodParametersInfo()
+        {
+            var md = typeof(TestCls).GetMethod("Do");
+            List<string> parametersInfo = new List<string>();
+            foreach (var p in md.GetParameters())
+            {
+                parametersInfo.Add(string.Format("[{0}, type:{1}, is out:{2}, default value:{3}]", p.Name, p.ParameterType.FullName, p.IsOut, p.DefaultValue));
+            }
+            var att = md.GetParameters()[0].GetCustomAttributes(true);
+            Console.WriteLine("Method:TestCls.Do, parameters:" + string.Join(",", parametersInfo));
+            Console.WriteLine("Method:TestCls.Do, first parameter has custom attribute:" + ((Attribute)att[0]).GetType().FullName);
+        }
+
         [Obsolete("gasdgas")]
         public class TestCls
         {
@@ -168,7 +198,6 @@ namespace TestCases
             int aa = 203;
 
             static int bb = 333;
-            [Microsoft.SqlServer.Server.SqlFunction(DataAccess = Microsoft.SqlServer.Server.DataAccessKind.Read)]
             public TestCls foo(int b)
             {
                 Console.WriteLine("foo" + (aa + b));
@@ -179,6 +208,23 @@ namespace TestCases
             public static void bar()
             {
                 Console.WriteLine("bar");
+            }
+
+            [System.Runtime.CompilerServices.IndexerName("Ccc")]
+            public bool this[int i]
+            {
+                get { return true; }
+            }
+
+            [System.Runtime.CompilerServices.IndexerName("Ccc")]
+            public bool this[string s]
+            {
+                get { return false; }
+            }
+
+            public static void Do([Test] int i, out int ii, string s = "123")
+            {
+                ii = 0;
             }
         }
 
@@ -354,7 +400,7 @@ namespace TestCases
 
         public static void ReflectionTest12()
         {
-            var types = ILRuntimeTest.TestMainForm._app.LoadedTypes.ToArray();
+            /*var types = ILRuntimeTest.TestMainForm._app.LoadedTypes.ToArray();
             for (int i = 0; i < types.Length; i++)
             {
                 Type type = types[i].Value.ReflectionType;
@@ -367,7 +413,7 @@ namespace TestCases
 
                 object[] attrs = type.GetCustomAttributes(typeof(TestAttribute), false);
             }
-
+            */
         }
 
         public static void ReflectionTest13()
@@ -504,7 +550,7 @@ namespace TestCases
             void Display();
         }
 
-        class TestA<T, U> where T : TestB, new() where U : TestC, new()
+        class TestA<T, U> : ITestA where T : TestB, new() where U : TestC, new()
         {
             public T instanceT;
             public U instanceU;

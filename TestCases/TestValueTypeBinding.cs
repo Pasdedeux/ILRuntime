@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ILRuntimeTest;
 using ILRuntimeTest.TestFramework;
 
 namespace TestCases
@@ -19,6 +20,7 @@ namespace TestCases
             Console.WriteLine(a.ToString());
         }
 
+        [ILRuntimeTest(IsToDo = true)]
         public static void Test01()
         {
             TestVector3 vec = new TestVector3(100, 1, 0);
@@ -241,7 +243,7 @@ namespace TestCases
         public static void UnitTest_10035()
         {
             TestVector3[] FuncBtnsPos1 = new TestVector3[3] { TestVector3.One, TestVector3.One, TestVector3.One };
-            foreach(var i in FuncBtnsPos1)
+            foreach (var i in FuncBtnsPos1)
             {
                 Console.WriteLine(i.ToString());
             }
@@ -292,7 +294,7 @@ namespace TestCases
             rawPos.y = 1122333;
 
             Console.WriteLine(rawPos.y);
-            if(rawPos.y != 1122333)
+            if (rawPos.y != 1122333)
                 throw new AccessViolationException();
         }
 
@@ -466,6 +468,30 @@ namespace TestCases
             Console.WriteLine(a);
             if (a.X != 2)
                 throw new Exception();
+        }
+
+        public static void UnitTest_10047()
+        {
+            TestVector3[] arr2 = new TestVector3[10];
+            arr2[0].X = 1243;
+            arr2[0] += TestVector3.One;
+
+            if(Math.Abs(arr2[0].X - 1244)>0.001f)
+                throw new Exception();
+        }
+
+        public static void UnitTest_10048()
+        {
+            TestVectorClass cls = new TestVectorClass();
+            TestVectorClass cls2 = new TestVectorClass();
+            for (int i = 0; i < 3; i++)
+            {
+                cls.Vector2 = cls2.Vector2 = new TestVector3(3, 4, i);
+                Console.WriteLine(cls.Vector2);
+            }
+
+            if (cls.Vector2.Z != 2)
+                throw new Exception($"cls.Vector2.Z == {cls.Vector2.Z}");
         }
     }
 }

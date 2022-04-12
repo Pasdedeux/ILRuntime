@@ -9,7 +9,7 @@ using ILRuntime.Other;
 using ILRuntime.Mono.Cecil;
 using ILRuntime.Runtime.Intepreter;
 using System.Reflection;
-using UnityEngine;
+using ILRuntime.Reflection;
 
 namespace ILRuntime.CLR.Utils
 {
@@ -267,9 +267,9 @@ namespace ILRuntime.CLR.Utils
                 else if (pt == typeof(sbyte) && !(obj is sbyte))
                     obj = (sbyte)(int)obj;
                 else if (pt == typeof(ulong) && !(obj is ulong))
+                {
                     obj = (ulong)(long)obj;
-                else if ( pt == typeof( long ) && !( obj is long ) )
-                    obj = ( long )obj;
+                }
             }
             else if (obj is ILRuntime.Reflection.ILRuntimeWrapperType)
             {
@@ -294,15 +294,14 @@ namespace ILRuntime.CLR.Utils
             else if (obj is ILTypeInstance)
             {
                 var adapter = obj as IDelegateAdapter;
-                
+
                 if (adapter != null && pt != typeof(ILTypeInstance))
                 {
                     return adapter.Delegate;
                 }
-                
+
                 if (!(obj is ILEnumTypeInstance))
                 {
-                    
                     var ins = (ILTypeInstance)obj;
                     /*if (ins.IsValueType)
                         ins = ins.Clone();*/
@@ -338,6 +337,13 @@ namespace ILRuntime.CLR.Utils
                     return false;
             }
             return true;
+        }
+
+        public static Type UnWrapper(this Type type)
+        {
+            if (type is ILRuntimeWrapperType)
+                return (type as ILRuntimeWrapperType).RealType;
+            return type;
         }
     }
 }
