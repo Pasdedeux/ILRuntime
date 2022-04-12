@@ -19,21 +19,27 @@
   <ItemGroup>
     <Reference Include="DynamicExpresso.Core">
       <HintPath>..\Dependencies\netstandard2.0\DynamicExpresso.Core.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
     <Reference Include="ILRuntime.Mono.Cecil">
       <HintPath>..\Dependencies\netstandard2.0\ILRuntime.Mono.Cecil.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis">
       <HintPath>..\Dependencies\netstandard2.0\Microsoft.CodeAnalysis.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp">
       <HintPath>..\Dependencies\netstandard2.0\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\LTool\References\UnityEngine.dll</HintPath>
+      <HintPath>..\References\UnityEngine.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\LTool\References\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\References\UnityEngine.CoreModule.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
   </ItemGroup>
 
