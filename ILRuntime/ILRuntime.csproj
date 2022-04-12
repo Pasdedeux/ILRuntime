@@ -7,13 +7,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NET_4_6</DefineConstants>
+    <DefineConstants>TRACE;NET_4_6;UNITY_5_5_OR_NEWER</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;NET_4_6;NO_PROFILER;OUTPUT_JIT_RESULT</DefineConstants>
+    <DefineConstants>TRACE;NET_4_6;NO_PROFILER;OUTPUT_JIT_RESULT;UNITY_5_5_OR_NEWER</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +28,12 @@
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp">
       <HintPath>..\Dependencies\netstandard2.0\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\LTool\References\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\LTool\References\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 
