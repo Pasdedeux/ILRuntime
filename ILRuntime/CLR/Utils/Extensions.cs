@@ -267,9 +267,9 @@ namespace ILRuntime.CLR.Utils
                 else if (pt == typeof(sbyte) && !(obj is sbyte))
                     obj = (sbyte)(int)obj;
                 else if (pt == typeof(ulong) && !(obj is ulong))
-                {
                     obj = (ulong)(long)obj;
-                }
+                else if ( pt == typeof( long ) && !( obj is long ) )
+                    obj = ( long )obj;
             }
             else if (obj is ILRuntime.Reflection.ILRuntimeWrapperType)
             {
