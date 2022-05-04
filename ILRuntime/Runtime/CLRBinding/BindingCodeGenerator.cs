@@ -395,10 +395,26 @@ namespace ILRuntime.Runtime.Generated
                         CLR.TypeSystem.ILType iltype = (CLR.TypeSystem.ILType)type;
                         if (iltype.GenericInstances != null)
                         {
-                            foreach(var i in iltype.GenericInstances)
+                            try
                             {
-                                PrewarmType(i);
+                                //TODO 启动时，在循环过程中出现了增加子对象，导致foreach因出现新增而出错
+                                //先使用for适应意外“新增”的情况，确保正常预热
+                                int count = iltype.GenericInstances.Count;
+                                for (int i = 0; i < iltype.GenericInstances.Count; i++)
+                                {
+                                    PrewarmType(iltype.GenericInstances[i]);
+                                }
+                                //foreach (var i in iltype.GenericInstances)
+                                //{
+                                //    PrewarmType(i);
+                                //}
                             }
+                            catch (Exception)
+                            {
+
+                                throw;
+                            }
+                           
                         }
                     }
                     else
